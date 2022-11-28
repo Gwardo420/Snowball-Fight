@@ -7,6 +7,8 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer);
 
+const PORT = process.env.PORT || 5000;
+
 const loadMap = require("./mapLoader");
 
 const SPEED = 7;
