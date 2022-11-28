@@ -12,8 +12,8 @@ const PORT = process.env.PORT || 3000;
 const loadMap = require("./mapLoader");
 
 const SPEED = 5;
-const TICK_RATE = 30;
-const SNOWBALL_SPEED = 7;
+const TICK_RATE = 60;
+const SNOWBALL_SPEED = 10;
 const PLAYER_SIZE = 32;
 const TILE_SIZE = 16;
 
