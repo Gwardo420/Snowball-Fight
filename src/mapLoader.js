@@ -3,7 +3,7 @@ const tmx = require('tmx-parser');
 async function loadMap() {
   const map = await new Promise((resolve, reject) => {
     tmx.parseFile('./src/map.tmx', function(err, loadedMap) {
-      if (err) throw reject(err);
+      // if (err) throw reject(err);
       console.log(loadedMap);
       resolve(loadedMap);
     });
