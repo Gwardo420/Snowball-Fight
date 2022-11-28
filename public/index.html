@@ -11,15 +11,70 @@
   <style>
     body {
       margin: 0px;
+      background: linear-gradient(35deg, #212121, #515151);
+      background-size: cover;
+      background-position: center;
+      opacity: 100;
+      animation: fadeIn 2s;
+      min-width: 100%;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 100;
+      }
+    }
+
+    .creator {
+      bottom: 10px;
+      position: absolute;
+      display: grid;
+      width: 100%;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      color: white;
+      font-weight: bolder;
+      font-family: monospace;
+      font-size: 1.3rem;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: black;
+      user-select: none;
+    }
+
+    .title {
+      position: absolute;
+      margin-top: 20px;
+      display: grid;
+      width: 100%;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      color: white;
+      font-weight: bolder;
+      font-family: monospace;
+      font-size: 2rem;
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: black;
+      user-select: none;
     }
   </style>
   
 </head>
 <body>
+  <div class="title">My Cozy Snowball Fight</div>
+
   <canvas id="canvas">
 
   </canvas>
 
+  <div class="creator">Created By Gwardo420</div>
   <script src="/socket.io/socket.io.js"></script>
   <script type="module" src="/index.js"></script>
 </body>
