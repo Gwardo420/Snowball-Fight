@@ -155,7 +155,7 @@ async function main() {
   
   app.use(express.static("public"));
   
-  httpServer.listen(3000);
+  httpServer.listen(PORT);
 
   let lastUpdate = Date.now();
   setInterval(() => {
