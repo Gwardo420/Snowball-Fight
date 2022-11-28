@@ -11,16 +11,16 @@ const PORT = process.env.PORT || 3000;
 
 const loadMap = require("./mapLoader");
 
-const SPEED = 7;
-const TICK_RATE = 60;
-const SNOWBALL_SPEED = 10;
+const SPEED = 5;
+const TICK_RATE = 30;
+const SNOWBALL_SPEED = 7;
 const PLAYER_SIZE = 32;
 const TILE_SIZE = 16;
 
 let players = [];
 let snowballs = [];
 const inputsMap = {};
-let ground2D, decal2D;
+let ground2D, decal2D, road2D;
 
 function isColliding(rect1, rect2) {
   return ( 
@@ -108,7 +108,7 @@ function tick(delta) {
 }
 
 async function main() {
-  ({ ground2D, decal2D } = await loadMap());
+  ({ ground2D, decal2D, road2D, rock2D } = await loadMap());
 
   io.on('connect', (socket) => {
     console.log("User connected to ", socket.id);
@@ -129,6 +129,8 @@ async function main() {
     socket.emit("map", {
       ground: ground2D,
       decal: decal2D,
+      roads: road2D,
+      rocks: rock2D
     });
 
     socket.on('inputs', (inputs) => {

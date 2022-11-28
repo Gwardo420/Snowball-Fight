@@ -18,6 +18,8 @@ const socket = io();
 
 let groundMap = [[]];
 let decalMap = [[]];
+let rockMap = [[]];
+let roadMap = [[]];
 
 let players = [];
 let snowballs = [];
@@ -32,6 +34,8 @@ socket.on('connect', function(socket) {
 socket.on('map', (loadedMap) => {
   groundMap = loadedMap.ground;
   decalMap = loadedMap.decal;
+  roadMap = loadedMap.roads;
+  rockMap = loadedMap.rocks;
 });
 
 socket.on('players', (serverPlayers) => {
@@ -131,6 +135,29 @@ function loop() {
     }
   }
 
+  for (let row = 0; row < roadMap.length; row++) {
+    for (let col = 0; col < roadMap[0].length; col++) {
+      const { id } = roadMap[row][col] ?? {id: undefined};
+      const imageRow = parseInt(id / TILES_IN_ROW);
+      const imageCol = parseInt(id % TILES_IN_ROW);
+
+      // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+      
+      canvas.drawImage(
+        mapImage, 
+        imageCol * TILE_SIZE,
+        imageRow * TILE_SIZE,
+        TILE_SIZE,
+        TILE_SIZE,
+        col * TILE_SIZE - cameraX, 
+        row * TILE_SIZE - cameraY, 
+        TILE_SIZE, 
+        TILE_SIZE
+      );
+
+    }
+  }
+
   for (let row = 0; row < decalMap.length; row++) {
     for (let col = 0; col < decalMap[0].length; col++) {
       const { id } = decalMap[row][col] ?? {id: undefined};
@@ -154,13 +181,34 @@ function loop() {
     }
   }
 
+  for (let row = 0; row < rockMap.length; row++) {
+    for (let col = 0; col < rockMap[0].length; col++) {
+      const { id } = rockMap[row][col] ?? {id: undefined};
+      const imageRow = parseInt(id / TILES_IN_ROW);
+      const imageCol = parseInt(id % TILES_IN_ROW);
+
+      // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+      
+      canvas.drawImage(
+        mapImage, 
+        imageCol * TILE_SIZE,
+        imageRow * TILE_SIZE,
+        TILE_SIZE,
+        TILE_SIZE,
+        col * TILE_SIZE - cameraX, 
+        row * TILE_SIZE - cameraY, 
+        TILE_SIZE, 
+        TILE_SIZE
+      );
+
+    }
+  }
+
 
   for(const player of players) {
-
     canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY)
   
     canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY - 3, 25, 25)
-
   }
 
   for(const snowball of snowballs) {
