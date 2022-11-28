@@ -8,7 +8,7 @@ async function loadMap() {
       resolve(loadedMap);
     });
   });
-  
+
   const layer = map.layers[0];
   const groundTiles = layer.tiles;
   const decalTiles = map.layers[1].tiles;

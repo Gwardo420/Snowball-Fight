@@ -4,6 +4,11 @@ mapImage.src = '/snow.png';
 const snowmanImage = new Image();
 snowmanImage.src = '/snowman.png';
 
+const santaHat = new Image();
+santaHat.src = '/santa-hat.png';
+
+const audio = new Audio('walking-snow.mp3');
+
 const canvasElement = document.getElementById('canvas');
 canvasElement.width = window.innerWidth;
 canvasElement.height = window.innerHeight;
@@ -35,7 +40,7 @@ socket.on('players', (serverPlayers) => {
 
 socket.on('snowballs', (serverSnowballs) => {
   snowballs = serverSnowballs;
-})
+});
 
 const inputs = {
   up: false, 
@@ -54,6 +59,11 @@ window.addEventListener('keydown', (e) => {
   } else if(e.key === "a") {
     inputs["left"] = true;
   }
+
+  // if(["a", "s", "w", "d"].includes(e.key)) {
+  //   audio.play()
+  // }
+
   socket.emit('inputs', inputs)
 });
 
@@ -67,6 +77,12 @@ window.addEventListener('keyup', (e) => {
   } else if(e.key === "a") {
     inputs["left"] = false;
   }
+
+  // if(["a", "s", "w", "d"].includes(e.key) ) {
+  //   audio.pause()
+  //   audio.currentTime = 0;
+  // }
+
   socket.emit('inputs', inputs)
 });
 
@@ -140,7 +156,11 @@ function loop() {
 
 
   for(const player of players) {
+
     canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY)
+  
+    canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY - 3, 25, 25)
+
   }
 
   for(const snowball of snowballs) {
