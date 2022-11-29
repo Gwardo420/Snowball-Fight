@@ -19,6 +19,7 @@ const TILE_SIZE = 16;
 
 let players = [];
 let snowballs = [];
+let usernames = [];
 const inputsMap = {};
 let ground2D, decal2D, road2D;
 

@@ -16,8 +16,6 @@ const canvas = canvasElement.getContext('2d');
 
 const socket = io();
 
-// const username = prompt("Enter a username 👇");
-
 let groundMap = [[]];
 let decalMap = [[]];
 let rockMap = [[]];
