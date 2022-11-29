@@ -260,8 +260,12 @@ function loop() {
     for(let i = 0; i < users.length; i++) {
       if(users[i].id === player.id) {
         canvas.fillText(users[i].username.length > 10 ? users[i].username.slice(0, 10) + '...' : users[i].username , player.x - cameraX + 30, player.y - cameraY - 10);
-      } else if(!users[i].username){
-        canvas.fillText(player.id.length > 10 ? player.id.slice(0, 10) + '...' : player.id , player.x - cameraX + 30, player.y - cameraY - 10);
+      }
+
+      if(users[i].id === player.id) {
+        if(!users[i].username) {
+          canvas.fillText(player.id.length > 10 ? player.id.slice(0, 10) + '...' : player.id , player.x - cameraX + 30, player.y - cameraY - 10);
+        }
       }
     }
   }
