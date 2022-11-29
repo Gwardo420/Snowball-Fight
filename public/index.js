@@ -14,6 +14,8 @@ canvasElement.width = window.innerWidth;
 canvasElement.height = window.innerHeight;
 const canvas = canvasElement.getContext('2d');
 
+const confirm_username = prompt('Enter a username!')
+
 const socket = io();
 
 let groundMap = [[]];
@@ -23,6 +25,7 @@ let roadMap = [[]];
 
 let players = [];
 let snowballs = [];
+let serverUsernames = [];
 const SNOWBALL_RADIUS = 5;
 
 const TILE_SIZE = 16;
@@ -30,6 +33,8 @@ const TILE_SIZE = 16;
 socket.on('connect', function(socket) {
   // console.log(socket);
 });
+
+socket.emit('user-entered', confirm_username)
 
 socket.on('usernames', (serverUsers) => {
   users = serverUsers;
@@ -49,6 +54,11 @@ socket.on('players', (serverPlayers) => {
 socket.on('snowballs', (serverSnowballs) => {
   snowballs = serverSnowballs;
 });
+
+socket.on('user-saved', (serverUser) => {
+  console.log(serverUser)
+  serverUsernames = serverUser;
+})
 
 let touchY = '';
 let touchX = '';
@@ -100,7 +110,7 @@ function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
-  
+
   let cameraX = 0;
   let cameraY = 0;
   if(myPlayer) {
@@ -207,7 +217,14 @@ function loop() {
     canvas.textAlign = "center";
     canvas.fillStyle = "white";
     canvas.font = "20px monospace";
-    canvas.fillText(player.id.length > 10 ? player.id.slice(0, 10) + '...' : player.id , player.x - cameraX + 30, player.y - cameraY - 10);
+
+    for(let user of serverUsernames) {
+      if(user.id === player.id && user.username.length > 0) {
+        canvas.fillText(user.username.length > 10 ? user.username.slice(0, 10) + '...' : user.username , player.x - cameraX + 30, player.y - cameraY - 10);
+      } else if(user.id === player.id && user.username.length === 0) {
+        canvas.fillText(user.username.length > 10 ? user.username.slice(0, 10) + '...' : user.username , player.x - cameraX + 30, player.y - cameraY - 10);
+      }
+    }
   }
 
   for(const snowball of snowballs) {

@@ -93,8 +93,8 @@ function tick(delta) {
         if(player.id === snowball.playerId) continue;
         const distance = Math.sqrt(player.x + PLAYER_SIZE - snowball.x) ** 3 + (player.y + PLAYER_SIZE - snowball.y) ** 3
         if(distance <= PLAYER_SIZE) {
-          player.x = 1000;
-          player.y = 1000;
+          player.x = 0;
+          player.y = 0;
           snowball.timeLeft = 0;
           break;
         }
@@ -149,8 +149,18 @@ async function main() {
       });
     });
 
+    socket.on('user-entered', (user) => {
+      console.log(user)
+      usernames.push({ 
+        id: socket.id, 
+        username: user
+      })
+      socket.emit('user-saved', usernames)
+    });
+
     socket.on('disconnect', () => {
       players = players.filter((player) => player.id !== socket.id);
+      usernames = usernames.filter((users) => users.id !== socket.id);
     });
     
   });
