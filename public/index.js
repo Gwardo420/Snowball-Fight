@@ -125,7 +125,6 @@ function loop() {
       const { id } = groundMap[row][col];
       const imageRow = parseInt(id / TILES_IN_ROW);
       const imageCol = parseInt(id % TILES_IN_ROW);
-
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
       canvas.drawImage(
         mapImage, 
@@ -147,9 +146,7 @@ function loop() {
       const { id } = roadMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
       const imageCol = parseInt(id % TILES_IN_ROW);
-
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-      
       canvas.drawImage(
         mapImage, 
         imageCol * TILE_SIZE,
@@ -170,9 +167,7 @@ function loop() {
       const { id } = decalMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
       const imageCol = parseInt(id % TILES_IN_ROW);
-
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-      
       canvas.drawImage(
         mapImage, 
         imageCol * TILE_SIZE,
@@ -193,9 +188,7 @@ function loop() {
       const { id } = rockMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
       const imageCol = parseInt(id % TILES_IN_ROW);
-
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-      
       canvas.drawImage(
         mapImage, 
         imageCol * TILE_SIZE,
@@ -219,10 +212,14 @@ function loop() {
     canvas.font = "20px monospace";
 
     for(let user of serverUsernames) {
-      if(user.id === player.id && user.username.length > 0) {
-        canvas.fillText(user.username.length > 10 ? user.username.slice(0, 10) + '...' : user.username , player.x - cameraX + 30, player.y - cameraY - 10);
-      } else if(user.id === player.id && user.username.length === 0) {
-        canvas.fillText(user.username.length > 10 ? user.username.slice(0, 10) + '...' : user.username , player.x - cameraX + 30, player.y - cameraY - 10);
+      if(user.id === player.id && user.username) {
+        if(user.id === player.id && user.username.length > 0) {
+          canvas.fillText(user.username.length > 10 ? user.username.slice(0, 10) + '...' : user.username , player.x - cameraX + 30, player.y - cameraY - 10);
+        } else if(user.id === player.id && user.username === null) {
+          canvas.fillText(user.username.length > 10 ? user.username.slice(0, 10) + '...' : user.username , player.x - cameraX + 30, player.y - cameraY - 10);
+        }
+      } else if(user.id === player.id && !user?.username) {
+        canvas.fillText(player.id.length > 10 ? player.id.slice(0, 10) + '...' : player.id , player.x - cameraX + 30, player.y - cameraY - 10);
       }
     }
   }
