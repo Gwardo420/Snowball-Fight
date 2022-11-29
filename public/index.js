@@ -153,9 +153,9 @@ function loop() {
     }
   }
 
-  for (let row = 0; row < decalMap.length; row++) {
-    for (let col = 0; col < decalMap[0].length; col++) {
-      const { id } = decalMap[row][col] ?? {id: undefined};
+  for (let row = 0; row < rockMap.length; row++) {
+    for (let col = 0; col < rockMap[0].length; col++) {
+      const { id } = rockMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
       const imageCol = parseInt(id % TILES_IN_ROW);
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
@@ -174,9 +174,9 @@ function loop() {
     }
   }
 
-  for (let row = 0; row < rockMap.length; row++) {
-    for (let col = 0; col < rockMap[0].length; col++) {
-      const { id } = rockMap[row][col] ?? {id: undefined};
+  for (let row = 0; row < decalMap.length; row++) {
+    for (let col = 0; col < decalMap[0].length; col++) {
+      const { id } = decalMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
       const imageCol = parseInt(id % TILES_IN_ROW);
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
@@ -198,7 +198,7 @@ function loop() {
   for(const player of players) {
     canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY + 50);
     canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY + 50, 18, 18);
-    canvas.fillText(player.id.slice(0, 6) + "...", player.x - cameraX + 10, player.y - cameraY + 35);
+    canvas.fillText(player.id.slice(0, 6) + "...", player.x - cameraX + 15, player.y - cameraY + 35);
   }
 
   for(const snowball of snowballs) {

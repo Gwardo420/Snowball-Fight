@@ -34,8 +34,10 @@
     .creator {
       bottom: 10px;
       position: fixed;
-      display: grid;
+      display: flex;
       margin-top: auto;
+      justify-content: center;
+      align-items: center;
       width: 100%;
       height: 25px;
       text-align: center;
@@ -44,7 +46,7 @@
       color: white;
       font-weight: bolder;
       font-family: monospace;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: black;
       user-select: none;
@@ -76,19 +78,26 @@
       min-height: 100%;
       min-width: 100%;
       transform: scale(1.3);
-      border: 0.125rem teal solid;
+      border: 1px teal inset;
+    }
+
+    .creator_image {
+      height: 25px;
+      width: 25px;
+      margin-right: 5px;
+      opacity: 75%;
     }
   </style>
   
 </head>
 <body>
-  <!-- <div class="title">My Cozy Snowball Fight</div> -->
+  <div class="title">My Cozy Snowball Fight</div>
 
   <canvas class="game" id="canvas">
 
   </canvas>
 
-  <!-- <div class="creator">Created By Gwardo420</div> -->
+  <div class="creator"><img class="creator_image" src="./goober.jpg"></img>Created By Gwardo420</div>
   <script src="/socket.io/socket.io.js"></script>
   <script type="module" src="/index.js"></script>
 </body>
