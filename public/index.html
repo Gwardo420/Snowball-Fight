@@ -13,14 +13,13 @@
     body {
       margin: 0px;
       background: linear-gradient(35deg, #212121, #515151);
-      background-size: cover;
-      background-position: center;
       opacity: 100;
       animation: fadeIn 2s;
       min-width: 100%;
       height: 100vh;
       min-height: 100vh;
       overflow: hidden;
+      box-sizing: border-box;
     }
 
     @keyframes fadeIn {
@@ -34,7 +33,7 @@
 
     .creator {
       bottom: 10px;
-      position: absolute;
+      position: fixed;
       display: grid;
       width: 100%;
       text-align: center;
@@ -50,7 +49,7 @@
     }
 
     .title {
-      position: absolute;
+      position: fixed;
       margin-top: 20px;
       display: grid;
       width: 100%;
@@ -64,6 +63,18 @@
       -webkit-text-stroke-width: 1px;
       -webkit-text-stroke-color: black;
       user-select: none;
+      z-index: 10;
+    }
+
+    .game {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 5px solid white;
+      max-width: 100%;
+      max-height: 100%;
+      image-rendering: optimize;
     }
   </style>
   
@@ -71,7 +82,7 @@
 <body>
   <div class="title">My Cozy Snowball Fight</div>
 
-  <canvas id="canvas">
+  <canvas class="game" id="canvas">
 
   </canvas>
 

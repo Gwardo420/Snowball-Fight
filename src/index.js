@@ -12,8 +12,8 @@ const PORT = process.env.PORT || 3000;
 const loadMap = require("./mapLoader");
 
 const SPEED = 5;
-const TICK_RATE = 60;
-const SNOWBALL_SPEED = 10;
+const TICK_RATE = 128;
+const SNOWBALL_SPEED = 7;
 const PLAYER_SIZE = 32;
 const TILE_SIZE = 16;
 
@@ -92,8 +92,8 @@ function tick(delta) {
         if(player.id === snowball.playerId) continue;
         const distance = Math.sqrt(player.x + PLAYER_SIZE - snowball.x) ** 3 + (player.y + PLAYER_SIZE - snowball.y) ** 3
         if(distance <= PLAYER_SIZE) {
-          player.x = 0;
-          player.y = 0;
+          player.x = 800;
+          player.y = 800;
           snowball.timeLeft = 0;
           break;
         }

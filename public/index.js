@@ -46,6 +46,9 @@ socket.on('snowballs', (serverSnowballs) => {
   snowballs = serverSnowballs;
 });
 
+let touchY = '';
+let touchX = '';
+let touchThreshold = 30;
 const inputs = {
   up: false, 
   down: false, 
@@ -87,7 +90,7 @@ window.addEventListener('keyup', (e) => {
   //   audio.currentTime = 0;
   // }
 
-  socket.emit('inputs', inputs)
+  socket.emit('inputs', inputs);
 });
 
 window.addEventListener('click', (e) => {
@@ -96,6 +99,38 @@ window.addEventListener('click', (e) => {
     e.clientX - canvasElement.width / 2,
   );
   socket.emit('snowballs', angle);
+});
+
+window.addEventListener("touchstart", (e) => {
+  // console.log(e.changedTouches[0].pageY)
+  touchY = e.changedTouches[0].pageY
+  touchX = e.changedTouches[0].pageX
+});
+
+window.addEventListener("touchmove", (e) => {
+  const swipeDistanceY = e.changedTouches[0].pageY - touchY;
+  if(swipeDistanceY < -touchThreshold) {
+    inputs["up"] = true;
+  } else if(swipeDistanceY > touchThreshold) {
+    inputs["down"] = true;
+  }
+
+  const swipeDistanceX = e.changedTouches[0].pageX - touchX;
+  if(swipeDistanceX < -touchThreshold) {
+    inputs["left"] = true;
+  } else if(swipeDistanceX > touchThreshold) {
+    inputs["right"] = true;
+  }
+
+  socket.emit('inputs', inputs)
+});
+
+window.addEventListener("touchend", (e) => {
+  // console.log(e.changedTouches[0].pageY)
+  inputs["up"] = false;
+  inputs["down"] = false;
+  inputs["right"] = false;
+  inputs["left"] = false;
 });
 
 function loop() {
@@ -208,7 +243,7 @@ function loop() {
   for(const player of players) {
     canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY)
   
-    canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY - 3, 25, 25)
+    canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY + 1, 18, 18)
   }
 
   for(const snowball of snowballs) {
