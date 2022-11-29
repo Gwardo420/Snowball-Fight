@@ -149,15 +149,6 @@ async function main() {
       });
     });
 
-    socket.on('user-entered', (user) => {
-      console.log(user)
-      usernames.push({ 
-        id: socket.id, 
-        username: user
-      })
-      socket.emit('user-saved', usernames)
-    });
-
     socket.on('disconnect', () => {
       players = players.filter((player) => player.id !== socket.id);
       usernames = usernames.filter((users) => users.id !== socket.id);
