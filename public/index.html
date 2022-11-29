@@ -17,7 +17,9 @@
       background-position: absolute;
       opacity: 100;
       animation: fadeIn 2s;
-      min-height: 100vh;
+      min-height: 100%;
+      min-width: 100%;
+      overflow: hidden;
     }
 
     @keyframes fadeIn {
@@ -71,6 +73,8 @@
     #canvas {
       width: 100%;
       height: 100%;
+      min-height: 100%;
+      min-width: 100%;
       transform: scale(1.3);
       border: 0.125rem teal solid;
     }

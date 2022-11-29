@@ -196,13 +196,12 @@ function loop() {
   }
   
   for(const player of players) {
-    canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY);
-    canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY + 1, 18, 18);
+    canvas.drawImage(snowmanImage, player.x - cameraX - 35, player.y - cameraY - 45);
+    canvas.drawImage(santaHat, player.x - cameraX - 10, player.y - cameraY - 43, 18, 18);
     canvas.textAlign = "center";
     canvas.fillStyle = "white";
     canvas.font = "20px monospace";
-    canvas.font = '48px serif';
-    canvas.fillText(player.id.slice(0, 6) + "...", player.x - cameraX + 25, player.y - cameraY + 1); 
+    canvas.fillText(player.id.slice(0, 6) + "...", player.x - cameraX , player.y - cameraY - 55); 
   }
 
   for(const snowball of snowballs) {
