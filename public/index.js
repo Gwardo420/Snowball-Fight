@@ -16,6 +16,11 @@ const canvas = canvasElement.getContext('2d');
 
 const socket = io();
 
+const username = prompt("Enter a username 👇");
+if(username) {
+  socket.emit('user-confirmed', username);
+}
+
 let groundMap = [[]];
 let decalMap = [[]];
 let rockMap = [[]];
@@ -23,13 +28,18 @@ let roadMap = [[]];
 
 let players = [];
 let snowballs = [];
+let users = [];
 const SNOWBALL_RADIUS = 5;
 
 const TILE_SIZE = 16;
 
 socket.on('connect', function(socket) {
-  console.log(socket);
+  // console.log(socket);
 });
+
+socket.on('usernames', (serverUsers) => {
+  users = serverUsers;
+})
 
 socket.on('map', (loadedMap) => {
   groundMap = loadedMap.ground;
@@ -102,7 +112,6 @@ window.addEventListener('click', (e) => {
 });
 
 window.addEventListener("touchstart", (e) => {
-  // console.log(e.changedTouches[0].pageY)
   touchY = e.changedTouches[0].pageY
   touchX = e.changedTouches[0].pageX
 });
@@ -126,7 +135,6 @@ window.addEventListener("touchmove", (e) => {
 });
 
 window.addEventListener("touchend", (e) => {
-  // console.log(e.changedTouches[0].pageY)
   inputs["up"] = false;
   inputs["down"] = false;
   inputs["right"] = false;
@@ -137,6 +145,7 @@ function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
+  const myUsername = users.find((user) => user.id === socket.id);
 
   let cameraX = 0;
   let cameraY = 0;
@@ -154,7 +163,6 @@ function loop() {
       const imageCol = parseInt(id % TILES_IN_ROW);
 
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-      
       canvas.drawImage(
         mapImage, 
         imageCol * TILE_SIZE,
@@ -166,7 +174,7 @@ function loop() {
         TILE_SIZE, 
         TILE_SIZE
       );
-
+      
     }
   }
 
@@ -241,9 +249,18 @@ function loop() {
 
 
   for(const player of players) {
-    canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY)
-  
-    canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY + 1, 18, 18)
+    canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY);
+    canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY + 1, 18, 18);
+    canvas.textAlign = "center";
+    canvas.fillStyle = "white";
+    canvas.font = "20px monospace";
+
+    for(let i = 0; i < users.length; i++) {
+      if(users[i].id === player.id) {
+        canvas.fillText(users[i].username.length > 10 ? users[i].username.slice(0, 10) + '...' : users[i].username , player.x - cameraX + 30, player.y - cameraY - 10);
+      }
+    }
+
   }
 
   for(const snowball of snowballs) {
