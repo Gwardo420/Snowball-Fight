@@ -16,12 +16,7 @@ const canvas = canvasElement.getContext('2d');
 
 const socket = io();
 
-const username = prompt("Enter a username 👇");
-if(username) {
-  socket.emit('user-confirmed', username);
-} else {
-  socket.emit('user-confirmed', "")
-}
+// const username = prompt("Enter a username 👇");
 
 let groundMap = [[]];
 let decalMap = [[]];
@@ -30,7 +25,6 @@ let roadMap = [[]];
 
 let players = [];
 let snowballs = [];
-let users = [];
 const SNOWBALL_RADIUS = 5;
 
 const TILE_SIZE = 16;
@@ -41,7 +35,7 @@ socket.on('connect', function(socket) {
 
 socket.on('usernames', (serverUsers) => {
   users = serverUsers;
-})
+});
 
 socket.on('map', (loadedMap) => {
   groundMap = loadedMap.ground;
@@ -79,10 +73,6 @@ window.addEventListener('keydown', (e) => {
     inputs["left"] = true;
   }
 
-  // if(["a", "s", "w", "d"].includes(e.key)) {
-  //   audio.play()
-  // }
-
   socket.emit('inputs', inputs)
 });
 
@@ -97,15 +87,10 @@ window.addEventListener('keyup', (e) => {
     inputs["left"] = false;
   }
 
-  // if(["a", "s", "w", "d"].includes(e.key) ) {
-  //   audio.pause()
-  //   audio.currentTime = 0;
-  // }
-
   socket.emit('inputs', inputs);
 });
 
-window.addEventListener('click', (e) => {
+canvasElement.addEventListener('click', (e) => {
   const angle = Math.atan2(
     e.clientY - canvasElement.height / 2,
     e.clientX - canvasElement.width / 2,
@@ -113,42 +98,11 @@ window.addEventListener('click', (e) => {
   socket.emit('snowballs', angle);
 });
 
-window.addEventListener("touchstart", (e) => {
-  touchY = e.changedTouches[0].pageY
-  touchX = e.changedTouches[0].pageX
-});
-
-window.addEventListener("touchmove", (e) => {
-  const swipeDistanceY = e.changedTouches[0].pageY - touchY;
-  if(swipeDistanceY < -touchThreshold) {
-    inputs["up"] = true;
-  } else if(swipeDistanceY > touchThreshold) {
-    inputs["down"] = true;
-  }
-
-  const swipeDistanceX = e.changedTouches[0].pageX - touchX;
-  if(swipeDistanceX < -touchThreshold) {
-    inputs["left"] = true;
-  } else if(swipeDistanceX > touchThreshold) {
-    inputs["right"] = true;
-  }
-
-  socket.emit('inputs', inputs)
-});
-
-window.addEventListener("touchend", (e) => {
-  inputs["up"] = false;
-  inputs["down"] = false;
-  inputs["right"] = false;
-  inputs["left"] = false;
-});
-
 function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
-  const myUsername = users.find((user) => user.id === socket.id);
-
+  
   let cameraX = 0;
   let cameraY = 0;
   if(myPlayer) {
@@ -248,26 +202,14 @@ function loop() {
 
     }
   }
-
-
+  
   for(const player of players) {
     canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY);
     canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY + 1, 18, 18);
     canvas.textAlign = "center";
     canvas.fillStyle = "white";
     canvas.font = "20px monospace";
-
-    for(let i = 0; i < users.length; i++) {
-      if(users[i].id === player.id) {
-        canvas.fillText(users[i].username.length > 10 ? users[i].username.slice(0, 10) + '...' : users[i].username , player.x - cameraX + 30, player.y - cameraY - 10);
-      }
-
-      if(users[i].id === player.id) {
-        if(!users[i].username) {
-          canvas.fillText(player.id.length > 10 ? player.id.slice(0, 10) + '...' : player.id , player.x - cameraX + 30, player.y - cameraY - 10);
-        }
-      }
-    }
+    canvas.fillText(player.id.length > 10 ? player.id.slice(0, 10) + '...' : player.id , player.x - cameraX + 30, player.y - cameraY - 10);
   }
 
   for(const snowball of snowballs) {

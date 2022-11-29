@@ -20,7 +20,6 @@ const TILE_SIZE = 16;
 let players = [];
 let snowballs = [];
 const inputsMap = {};
-let usernameMap = [];
 let ground2D, decal2D, road2D;
 
 function isColliding(rect1, rect2) {
@@ -138,17 +137,8 @@ async function main() {
       inputsMap[socket.id] = inputs;
     });
 
-    socket.on('user-confirmed', (user) => {
-      usernameMap.push({ 
-        id: socket.id,
-        username: user
-      });
-      io.emit('usernames', usernameMap);
-    });
-
     socket.on('snowballs', (angle) => {
       const player = players.find((player) => player.id === socket.id);
-      
       snowballs.push({
         angle,
         x: player.x,
