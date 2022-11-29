@@ -19,7 +19,6 @@ const TILE_SIZE = 16;
 
 let players = [];
 let snowballs = [];
-let usernames = [];
 const inputsMap = {};
 let ground2D, decal2D, road2D;
 
@@ -151,7 +150,6 @@ async function main() {
 
     socket.on('disconnect', () => {
       players = players.filter((player) => player.id !== socket.id);
-      usernames = usernames.filter((users) => users.id !== socket.id);
     });
     
   });
