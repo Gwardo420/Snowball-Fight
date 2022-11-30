@@ -39,8 +39,8 @@ function increment(){
 };
 
 function display_balls() {
-  document.getElementById('snowballsNumber').innerHTML = snowball_thrown + ' Snow Balls thrown';
-}
+  document.getElementById('snowballsNumber').innerHTML = 'You threw ' + snowball_thrown + ' snowballs';
+};
 
 socket.on('connect', function(socket) {
   // console.log(socket);
