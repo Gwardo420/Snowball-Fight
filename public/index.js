@@ -1,6 +1,9 @@
 const mapImage = new Image();
 mapImage.src = '/snow.png';
 
+const cluImage = new Image();
+cluImage.src = '/cluPix.png';
+
 const snowmanImage = new Image();
 snowmanImage.src = '/snowman.png';
 
@@ -158,26 +161,47 @@ function loop() {
     }
   }
 
-  for (let row = 0; row < rockMap.length; row++) {
-    for (let col = 0; col < rockMap[0].length; col++) {
-      const { id } = rockMap[row][col] ?? {id: undefined};
-      const imageRow = parseInt(id / TILES_IN_ROW);
-      const imageCol = parseInt(id % TILES_IN_ROW);
-      // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-      canvas.drawImage(
-        mapImage, 
-        imageCol * TILE_SIZE,
-        imageRow * TILE_SIZE,
-        TILE_SIZE,
-        TILE_SIZE,
-        col * TILE_SIZE - cameraX, 
-        row * TILE_SIZE - cameraY, 
-        TILE_SIZE, 
-        TILE_SIZE
-      );
+  // for (let row = 0; row < rockMap.length; row++) {
+  //   for (let col = 0; col < rockMap[0].length; col++) {
+  //     const { id } = rockMap[row][col] ?? {id: undefined};
+  //     const imageRow = parseInt(id / TILES_IN_ROW);
+  //     const imageCol = parseInt(id % TILES_IN_ROW);
+  //     drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+  //     canvas.drawImage(
+  //       mapImage, 
+  //       imageCol * TILE_SIZE,
+  //       imageRow * TILE_SIZE,
+  //       TILE_SIZE,
+  //       TILE_SIZE,
+  //       col * TILE_SIZE - cameraX, 
+  //       row * TILE_SIZE - cameraY, 
+  //       TILE_SIZE, 
+  //       TILE_SIZE
+  //     );
 
-    }
-  }
+  //   }
+  // }
+
+  // for (let row = 0; row < rockMap.length; row++) {
+  //   for (let col = 0; col < rockMap[0].length; col++) {
+  //     const { id } = rockMap[row][col] ?? {id: undefined};
+  //     const imageRow = parseInt(id / TILES_IN_ROW);
+  //     const imageCol = parseInt(id % TILES_IN_ROW);
+  //     // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+  //     canvas.drawImage(
+  //       cluImage, 
+  //       imageCol * TILE_SIZE,
+  //       imageRow * TILE_SIZE,
+  //       TILE_SIZE,
+  //       TILE_SIZE,
+  //       col * TILE_SIZE - cameraX, 
+  //       row * TILE_SIZE - cameraY, 
+  //       TILE_SIZE, 
+  //       TILE_SIZE
+  //     );
+      
+  //   }
+  // }
 
   for (let row = 0; row < decalMap.length; row++) {
     for (let col = 0; col < decalMap[0].length; col++) {
