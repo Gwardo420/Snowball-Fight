@@ -201,9 +201,9 @@ function loop() {
   }
   
   for(const player of players) {
-    canvas.drawImage(snowmanImage, player.x - cameraX, player.y - cameraY);
-    canvas.drawImage(santaHat, player.x - cameraX + 25, player.y - cameraY , 18, 18);
-    canvas.fillText(player.id.slice(0, 6) + "...", player.x - cameraX + 15, player.y - cameraY - 10);
+    canvas.drawImage(snowmanImage, player.x - cameraX - 25, player.y - cameraY);
+    canvas.drawImage(santaHat, player.x - cameraX + 1, player.y - cameraY, 18, 18);
+    canvas.fillText(player.id.slice(0, 6) + "...", player.x - cameraX - 10, player.y - cameraY - 10);
   }
 
   for(const snowball of snowballs) {
