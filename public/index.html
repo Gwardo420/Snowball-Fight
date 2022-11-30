@@ -47,8 +47,6 @@
       font-weight: bolder;
       font-family: monospace;
       font-size: 1.4rem;
-      -webkit-text-stroke-width: 1px;
-      -webkit-text-stroke-color: black;
       user-select: none;
       z-index: 10;
     }
@@ -91,20 +89,22 @@
     .joined {
       position: fixed;
       z-index: 20;
-      font-size: 15px;
+      font-size: 1.3rem;
       font-family: monospace;
       font-weight: bolder;
       display: grid;
-      top: 60px;
+      top: 40px;
       left: 0px;
       right: 0px;
-      width: 100%;
+      width: 250px;
       max-width: 100%;
       margin-left: auto;
       margin-right: auto;
-      text-align: center;
-      color: '#ffffff';
+      border-color: aqua;
+      border: 0.125rem solid;
+      border-radius: 15px;
       user-select: none;
+      color: white;
     }
 
     .joined_div {
@@ -116,6 +116,12 @@
       margin-right: auto;
       color: '#ffffff';
     }
+
+    .front {
+      position: fixed;
+      top: 60px;
+      z-index: 29;
+    }
   </style>
   
 </head>
@@ -126,6 +132,10 @@
     <ul class="joined" id="joined-users">
 
     </ul>
+  </div>
+
+  <div class="front" id="snowballsNumber">
+
   </div>
 
   <canvas class="game" id="canvas">

@@ -22,6 +22,7 @@ let snowballs = [];
 const inputsMap = {};
 let ground2D, decal2D, road2D;
 
+
 function isColliding(rect1, rect2) {
   return ( 
     rect1.x < rect2.x + rect2.w &&
@@ -86,7 +87,6 @@ function tick(delta) {
       snowball.x += Math.cos(snowball.angle) * SNOWBALL_SPEED;
       snowball.y += Math.sin(snowball.angle) * SNOWBALL_SPEED;
       snowball.timeLeft -= delta;
-
 
       for(const player of players) {
         if(player.id === snowball.playerId) continue;
