@@ -4,7 +4,6 @@ const { Server } = require("socket.io");
 
 const app = express();
 const httpServer = createServer(app);
-
 const io = new Server(httpServer);
 
 const PORT = process.env.PORT || 3000;
@@ -17,6 +16,7 @@ const SNOWBALL_SPEED = 5;
 const PLAYER_SIZE = 32;
 const TILE_SIZE = 16;
 
+let usersJoined = [];
 let players = [];
 let snowballs = [];
 const inputsMap = {};
@@ -120,11 +120,15 @@ async function main() {
       right: false
     };
 
-    players.push({ 
+    players.push({
       id: socket.id, 
       x: 1000, 
       y: 1000,
     });
+
+    usersJoined.push(socket.id)
+
+    socket.emit('user-joined', usersJoined);
     
     socket.emit("map", {
       ground: ground2D,
@@ -150,6 +154,7 @@ async function main() {
 
     socket.on('disconnect', () => {
       players = players.filter((player) => player.id !== socket.id);
+      usersJoined = usersJoined.filter((player) => player !== socket.id);
     });
     
   });

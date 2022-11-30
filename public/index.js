@@ -21,6 +21,7 @@ let decalMap = [[]];
 let rockMap = [[]];
 let roadMap = [[]];
 
+let joinedMap = [];
 let players = [];
 let snowballs = [];
 const SNOWBALL_RADIUS = 5;
@@ -46,10 +47,13 @@ socket.on('snowballs', (serverSnowballs) => {
   snowballs = serverSnowballs;
 });
 
-socket.on('user-saved', (serverUser) => {
-  console.log(serverUser)
-  serverUsernames = serverUser;
-});
+socket.on('user-joined', (user) => {
+  joinedMap.push(user);
+  var listItems = joinedMap.map(function(user){
+    return `<div>${user.length} current players!</div>` + '<div>' + user + '</div>';
+  });
+  document.getElementById('joined-users').innerHTML = listItems.join(", ");
+})
 
 let touchY = '';
 let touchX = '';

@@ -7,7 +7,7 @@
   <link rel = "icon" href = "./snowman.png" type = "image/x-icon">
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-  <script src='main.js'></script>
+  <script src='index.js'></script>
 
   <style>
     body {
@@ -87,11 +87,46 @@
       margin-right: 5px;
       opacity: 75%;
     }
+
+    .joined {
+      position: fixed;
+      z-index: 20;
+      font-size: 15px;
+      font-family: monospace;
+      font-weight: bolder;
+      display: grid;
+      top: 60px;
+      left: 0px;
+      right: 0px;
+      width: 100%;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      color: '#ffffff';
+      user-select: none;
+    }
+
+    .joined_div {
+      display: grid;
+      align-items: center;
+      max-width: 100%;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      color: '#ffffff';
+    }
   </style>
   
 </head>
 <body>
   <div class="title">My Cozy Snowball Fight</div>
+
+  <div class="joined_div">
+    <ul class="joined" id="joined-users">
+
+    </ul>
+  </div>
 
   <canvas class="game" id="canvas">
 
