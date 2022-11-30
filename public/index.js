@@ -39,11 +39,12 @@ function increment(){
 };
 
 function display_balls() {
-  document.getElementById('snowballsNumber').innerHTML = 'You threw ' + snowball_thrown + ' snowballs';
+  document.getElementById('snowballsNumber').innerHTML = '<div>You threw</div>' + `<div>${snowball_thrown}</div>` + '<div>SNOWBALLS</div>';
 };
 
 socket.on('connect', function(socket) {
   // console.log(socket);
+  document.getElementById('snowballsNumber').innerHTML = '<div>You threw</div>' + `<div>${snowball_thrown}</div>` + '<div>SNOWBALLS</div>';
 });
 
 socket.on('map', (loadedMap) => {

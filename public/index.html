@@ -116,18 +116,26 @@
     }
 
     .front {
-      position: fixed;
-      display: flex;
+      display: grid;
       justify-content: center;
-      top: 100px;
-      z-index: 29;
+      align-items: center;
+      text-align: center;
+    }
+
+    .snowball_amount {
+      position: fixed;
+      top: 20px;
+      z-index: 10;
+      width: 100px;
+      max-width: 100px;
+      margin-left: 20px;
       color: white;
       user-select: none;
       left: 0;
       right: 0;
-      margin-left: auto;
       margin-right: auto;
       font-family: monospace;
+      font-weight: bolder;
     }
   </style>
   
@@ -141,7 +149,9 @@
     </ul>
   </div>
 
-  <div class="front" id="snowballsNumber">
+  <div class="snowball_amount">
+    <div class="front" id="snowballsNumber">
+  </div>
 
   </div>
 
