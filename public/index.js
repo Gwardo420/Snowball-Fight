@@ -24,13 +24,23 @@ let decalMap = [[]];
 let rockMap = [[]];
 let roadMap = [[]];
 
-var snowballsThrown = 0;
+var snowball_thrown = 0;
+
 let joinedMap = [];
 let players = [];
 let snowballs = [];
 const SNOWBALL_RADIUS = 5;
 
 const TILE_SIZE = 16;
+
+function increment(){
+  snowball_thrown++;
+  display_balls();
+};
+
+function display_balls() {
+  document.getElementById('snowballsNumber').innerHTML = snowball_thrown + ' Snow Balls thrown';
+}
 
 socket.on('connect', function(socket) {
   // console.log(socket);
@@ -102,6 +112,7 @@ canvasElement.addEventListener('click', (e) => {
     e.clientY - canvasElement.height / 2,
     e.clientX - canvasElement.width / 2,
   );
+  increment();
   socket.emit('snowballs', angle);
 });
 
@@ -160,48 +171,6 @@ function loop() {
 
     }
   }
-
-  // for (let row = 0; row < rockMap.length; row++) {
-  //   for (let col = 0; col < rockMap[0].length; col++) {
-  //     const { id } = rockMap[row][col] ?? {id: undefined};
-  //     const imageRow = parseInt(id / TILES_IN_ROW);
-  //     const imageCol = parseInt(id % TILES_IN_ROW);
-  //     drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-  //     canvas.drawImage(
-  //       mapImage, 
-  //       imageCol * TILE_SIZE,
-  //       imageRow * TILE_SIZE,
-  //       TILE_SIZE,
-  //       TILE_SIZE,
-  //       col * TILE_SIZE - cameraX, 
-  //       row * TILE_SIZE - cameraY, 
-  //       TILE_SIZE, 
-  //       TILE_SIZE
-  //     );
-
-  //   }
-  // }
-
-  // for (let row = 0; row < rockMap.length; row++) {
-  //   for (let col = 0; col < rockMap[0].length; col++) {
-  //     const { id } = rockMap[row][col] ?? {id: undefined};
-  //     const imageRow = parseInt(id / TILES_IN_ROW);
-  //     const imageCol = parseInt(id % TILES_IN_ROW);
-  //     // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-  //     canvas.drawImage(
-  //       cluImage, 
-  //       imageCol * TILE_SIZE,
-  //       imageRow * TILE_SIZE,
-  //       TILE_SIZE,
-  //       TILE_SIZE,
-  //       col * TILE_SIZE - cameraX, 
-  //       row * TILE_SIZE - cameraY, 
-  //       TILE_SIZE, 
-  //       TILE_SIZE
-  //     );
-      
-  //   }
-  // }
 
   for (let row = 0; row < decalMap.length; row++) {
     for (let col = 0; col < decalMap[0].length; col++) {
