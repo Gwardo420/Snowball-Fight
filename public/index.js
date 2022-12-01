@@ -1,9 +1,6 @@
 const mapImage = new Image();
 mapImage.src = '/snow.png';
 
-const cluImage = new Image();
-cluImage.src = '/cluPix.png';
-
 const snowmanImage = new Image();
 snowmanImage.src = '/snowman.png';
 
@@ -13,6 +10,7 @@ santaHat.src = '/santa-hat.png';
 const audio = new Audio('walking-snow.mp3');
 
 const canvasElement = document.getElementById('canvas');
+console.log(canvasElement)
 canvasElement.width = window.innerWidth;
 canvasElement.height = window.innerHeight;
 const canvas = canvasElement.getContext('2d');
@@ -20,12 +18,10 @@ const canvas = canvasElement.getContext('2d');
 const socket = io();
 
 let groundMap = [[]];
-let decalMap = [[]];
-let rockMap = [[]];
-let roadMap = [[]];
+let treeMap = [[]];
+let otherTreeMap = [[]];
 
-var snowball_thrown = 0;
-
+var snowballsThrown = 0;
 let joinedMap = [];
 let players = [];
 let snowballs = [];
@@ -33,25 +29,14 @@ const SNOWBALL_RADIUS = 5;
 
 const TILE_SIZE = 16;
 
-function increment(){
-  snowball_thrown++;
-  display_balls();
-};
-
-function display_balls() {
-  document.getElementById('snowballsNumber').innerHTML = '<div>You threw</div>' + `<div>${snowball_thrown}</div>` + '<div>SNOWBALLS</div>';
-};
-
 socket.on('connect', function(socket) {
   // console.log(socket);
-  document.getElementById('snowballsNumber').innerHTML = '<div>You threw</div>' + `<div>${snowball_thrown}</div>` + '<div>SNOWBALLS</div>';
 });
 
 socket.on('map', (loadedMap) => {
   groundMap = loadedMap.ground;
-  decalMap = loadedMap.decal;
-  roadMap = loadedMap.roads;
-  rockMap = loadedMap.rocks;
+  treeMap = loadedMap.trees;
+  otherTreeMap = loadedMap.trees2;
 });
 
 socket.on('players', (serverPlayers) => {
@@ -65,10 +50,22 @@ socket.on('snowballs', (serverSnowballs) => {
 socket.on('user-joined', (user) => {
   joinedMap.push(user);
   var listItems = joinedMap.map(function(user){
-    return `<div>${user.length} current players!</div>`;
+    return `<div>${user.length} current player(s)!</div>`;
   });
   document.getElementById('joined-users').innerHTML = listItems.join(", ");
 });
+
+var snowballsThrown = 0;
+
+function display_balls() {
+  document.getElementById('snowballsNumber').innerHTML = 'You threw ' + snowballsThrown + ' snowballs!';
+}
+
+
+function increment() {
+  snowballsThrown++;
+  display_balls();
+}
 
 let touchY = '';
 let touchX = '';
@@ -113,8 +110,8 @@ canvasElement.addEventListener('click', (e) => {
     e.clientY - canvasElement.height / 2,
     e.clientX - canvasElement.width / 2,
   );
-  increment();
   socket.emit('snowballs', angle);
+  increment();
 });
 
 function loop() {
@@ -133,9 +130,9 @@ function loop() {
 
   for (let row = 0; row < groundMap.length; row++) {
     for (let col = 0; col < groundMap[0].length; col++) {
-      const { id } = groundMap[row][col];
+      const { id } = groundMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
-      const imageCol = parseInt(id % TILES_IN_ROW);
+      const imageCol = id % TILES_IN_ROW;
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
       canvas.drawImage(
         mapImage, 
@@ -152,11 +149,11 @@ function loop() {
     }
   }
 
-  for (let row = 0; row < roadMap.length; row++) {
-    for (let col = 0; col < roadMap[0].length; col++) {
-      const { id } = roadMap[row][col] ?? {id: undefined};
+  for (let row = 0; row < treeMap.length; row++) {
+    for (let col = 0; col < treeMap[0].length; col++) {
+      const { id } = treeMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
-      const imageCol = parseInt(id % TILES_IN_ROW);
+      const imageCol = id % TILES_IN_ROW;
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
       canvas.drawImage(
         mapImage, 
@@ -169,15 +166,15 @@ function loop() {
         TILE_SIZE, 
         TILE_SIZE
       );
-
+      
     }
   }
 
-  for (let row = 0; row < decalMap.length; row++) {
-    for (let col = 0; col < decalMap[0].length; col++) {
-      const { id } = decalMap[row][col] ?? {id: undefined};
+  for (let row = 0; row < otherTreeMap.length; row++) {
+    for (let col = 0; col < otherTreeMap[0].length; col++) {
+      const { id } = otherTreeMap[row][col] ?? {id: undefined};
       const imageRow = parseInt(id / TILES_IN_ROW);
-      const imageCol = parseInt(id % TILES_IN_ROW);
+      const imageCol = id % TILES_IN_ROW;
       // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
       canvas.drawImage(
         mapImage, 
@@ -190,7 +187,7 @@ function loop() {
         TILE_SIZE, 
         TILE_SIZE
       );
-
+      
     }
   }
   

@@ -10,56 +10,49 @@ async function loadMap() {
 
   const layer = map.layers[0];
   const groundTiles = layer.tiles;
-  const decalTiles = map.layers[3].tiles;
-  const roadTiles = map.layers[1].tiles;
-  const rockTiles = map.layers[2].tiles;
+  const treeTiles = map.layers[1].tiles;
+  const otherTrees = map.layers[2].tiles;
+  
+  const trees2D = [];
   const ground2D = [];
-  const decal2D = [];
-  const road2D = [];
-  const rock2D = [];
+  const ground22D = [];
 
   for(let row = 0; row < map.height; row++) {
     const groundRow = [];
-    const decalRow = [];
-    const roadRow = [];
-    const rockRow = [];
+    const treeRow = [];
+    const otherTreeRow = [];
 
     for(let col = 0; col < map.width; col++) {
       const ground = groundTiles[row * map.height + col];
-      groundRow.push({ id: ground.id, gid: ground.gid });
-
-      const decalTile = decalTiles[row * map.height + col];
-      if(decalTile) {
-        decalRow.push({ id: decalTile.id, gid: decalTile.gid });
+      if(ground) {
+        groundRow.push({ id: ground.id, gid: ground.gid });
       } else {
-        decalRow.push(undefined);
+        groundRow.push(undefined)
       }
 
-      const roadTile = roadTiles[row * map.height + col];
-      if(roadTile) {
-        roadRow.push({ id: roadTile.id, gid: roadTile.gid });
+      const treeTile = treeTiles[row * map.height + col];
+      if(treeTile) {
+        treeRow.push({ id: treeTile.id, gid: treeTile.gid });
       } else {
-        roadRow.push(undefined);
+        treeRow.push(undefined);
       }
 
-      const rockTile = rockTiles[row * map.height + col];
-      if(rockTile) {
-        rockRow.push({ id: rockTile.id, gid: rockTile.gid });
+      const otherTreeTiles = otherTrees[row * map.height + col];
+      if(otherTreeTiles) {
+        otherTreeRow.push({ id: otherTreeTiles.id, gid: otherTreeTiles.gid });
       } else {
-        rockRow.push(undefined);
+        otherTreeRow.push(undefined);
       }
     }
+    trees2D.push(treeRow);
     ground2D.push(groundRow);
-    decal2D.push(decalRow);
-    road2D.push(roadRow);
-    rock2D.push(rockRow);
+    ground22D.push(otherTreeRow);
   }
 
   return {
     ground2D,
-    decal2D,
-    road2D,
-    rock2D
+    trees2D,
+    ground22D
   };
 }
 
