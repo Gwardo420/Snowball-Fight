@@ -64,6 +64,8 @@
       margin-left: 10px;
       font-size: 20px;
       user-select: none;
+      display: flex;
+      justify-content: center;
       /* position: fixed;
       margin-top: 20px;
       display: grid;
@@ -82,6 +84,11 @@
       z-index: 10; */
     }
 
+    .margin {
+      display: flex;
+      justify-content: center;
+    }
+
     .top_bar {
       display: flex;
       position: fixed;
@@ -89,13 +96,15 @@
       justify-content: space-between;
       content: "";
       z-index: 14;
-      background-color: #6969697a;
+      background: #9797976e;
       backdrop-filter: blur(10px);
-      width: 100vh;
-      min-width: 100%;
+      width: 90%;
+      min-width: 90%;
       height: 30px;
+      margin-top: 10px;
       min-height: 30px;
       max-height: 30px;
+      border-radius: 10px;
     }
 
     #canvas {
@@ -166,19 +175,21 @@
 </head>
   <body>
     
-    <div class="top_bar">
-      <div class="title">My Cozy Snowball Fight</div>
-
-      <div class="joined_div">
-        <ul class="joined" id="joined-users">
+    <div class="margin">
+      <div class="top_bar">
+        <div class="title">My Cozy Snowball Fight</div>
   
-        </ul>
+        <div class="joined_div">
+          <ul class="joined" id="joined-users">
+    
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="button">
+    <!-- <div class="button">
       <button onClick={openSite()} class="home-button">My Cozy</button>
-    </div>
+    </div> -->
 
     <canvas class="game" id="canvas">
 
