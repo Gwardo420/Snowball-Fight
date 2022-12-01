@@ -14,48 +14,48 @@ const SPEED = 2.5;
 const TICK_RATE = 128;
 const SNOWBALL_SPEED = 3;
 const PLAYER_SIZE = 32;
-// const TILE_SIZE = 16;
+const TILE_SIZE = 16;
 
 let usersJoined = [];
 let players = [];
 let snowballs = [];
 
 const inputsMap = {};
-let ground2D;
+let ground2D, logos2D, trees2D;
 
-// function isColliding(rect1, rect2) {
-//   return ( 
-//     rect1.x < rect2.x + rect2.w &&
-//     rect1.x + rect1.w > rect2.x &&
-//     rect1.y < rect2.y + rect2.h &&
-//     rect1.h + rect1.y > rect2.y 
-//   );
-// }
+function isColliding(rect1, rect2) {
+  return ( 
+    rect1.x < rect2.x + rect2.w &&
+    rect1.x + rect1.w > rect2.x &&
+    rect1.y < rect2.y + rect2.h &&
+    rect1.h + rect1.y > rect2.y 
+  );
+}
 
-// function isCollidingWithMap(player) {
-//   for (let row = 0; row < decal2D.length; row++) {
-//     for (let col = 0; col < decal2D[0].length; col++) {
-//       const tile = decal2D[row][col];
-//       if(tile && isColliding(
-//         {
-//           w: 16,
-//           h: 16,
-//           x: player.x,
-//           y: player.y,
-//         },
-//         {
-//           x: col * TILE_SIZE,
-//           y: row * TILE_SIZE,
-//           w: TILE_SIZE,
-//           h: TILE_SIZE
-//         }
-//       )) {
-//         return true;
-//       }
-//     }
-//   }
-//   return false;
-// }
+function isCollidingWithMap(player) {
+  for (let row = 0; row < logos2D.length; row++) {
+    for (let col = 0; col < logos2D[0].length; col++) {
+      const tile = logos2D[row][col];
+      if(tile && isColliding(
+        {
+          w: 16,
+          h: 16,
+          x: player.x,
+          y: player.y,
+        },
+        {
+          x: col * TILE_SIZE,
+          y: row * TILE_SIZE,
+          w: TILE_SIZE,
+          h: TILE_SIZE
+        }
+      )) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 function tick(delta) {
   for (const player of players) {
@@ -69,9 +69,9 @@ function tick(delta) {
       player.y += SPEED;
     };
 
-    // if(isCollidingWithMap(player)) {
-    //   player.y = previousY;
-    // }
+    if(isCollidingWithMap(player)) {
+      player.y = previousY;
+    }
 
     if(inputs.left === true) {
       player.x -= SPEED;
@@ -79,9 +79,9 @@ function tick(delta) {
       player.x += SPEED;
     };
 
-    // if(isCollidingWithMap(player)) {
-    //   player.x = previousX;
-    // }
+    if(isCollidingWithMap(player)) {
+      player.x = previousX;
+    }
 
     for(const snowball of snowballs) {
       snowball.x += Math.cos(snowball.angle) * SNOWBALL_SPEED;
@@ -108,7 +108,7 @@ function tick(delta) {
 }
 
 async function main() {
-  ({ ground2D, trees2D, ground22D } = await loadMap());
+  ({ ground2D, trees2D, logos2D } = await loadMap());
 
   io.on('connect', (socket) => {
     console.log("User connected to ", socket.id);
@@ -133,7 +133,7 @@ async function main() {
     socket.emit("map", {
       ground: ground2D,
       trees: trees2D,
-      trees2: ground22D,
+      trees2: logos2D,
     });
 
     socket.on('inputs', (inputs) => {

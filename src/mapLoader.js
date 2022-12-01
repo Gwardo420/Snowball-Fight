@@ -15,7 +15,7 @@ async function loadMap() {
   
   const trees2D = [];
   const ground2D = [];
-  const ground22D = [];
+  const logos2D = [];
 
   for(let row = 0; row < map.height; row++) {
     const groundRow = [];
@@ -46,13 +46,13 @@ async function loadMap() {
     }
     trees2D.push(treeRow);
     ground2D.push(groundRow);
-    ground22D.push(otherTreeRow);
+    logos2D.push(otherTreeRow);
   }
 
   return {
     ground2D,
     trees2D,
-    ground22D
+    logos2D
   };
 }
 
