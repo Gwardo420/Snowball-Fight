@@ -49,17 +49,18 @@ socket.on('snowballs', (serverSnowballs) => {
 
 socket.on('user-joined', (user) => {
   joinedMap.push(user);
-  var listItems = joinedMap.map(function(user){
-    return `<div>${user.length} current player(s)!</div>`;
-  });
-  document.getElementById('joined-users').innerHTML = listItems.join(", ");
+  updateUsers(joinedMap[0].length);
 });
+
+function updateUsers(e) {
+  document.getElementById('joined-users').innerHTML = `${e} player(s)`;
+}
 
 var snowballsThrown = 0;
 
 function display_balls() {
   document.getElementById('snowballsNumber').innerHTML = 'You threw ' + snowballsThrown + ' snowballs!';
-}
+};
 
 
 function increment() {
@@ -118,6 +119,9 @@ function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
+  const playerLength = players.length;
+  console.log(playerLength);
+  updateUsers(playerLength);
 
   let cameraX = 0;
   let cameraY = 0;
