@@ -92,8 +92,8 @@ function tick(delta) {
         if(player.id === snowball.playerId) continue;
         const distance = Math.sqrt(player.x + PLAYER_SIZE - snowball.x) ** 3 + (player.y + PLAYER_SIZE - snowball.y) ** 3
         if(distance <= PLAYER_SIZE) {
-          player.x = 0;
-          player.y = 0;
+          player.x = 250;
+          player.y = 250;
           snowball.timeLeft = 0;
           break;
         }
