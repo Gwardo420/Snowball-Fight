@@ -54,7 +54,7 @@ socket.on('user-joined', (serverPlayerLength) => {
 });
 
 function updateUsers(x) {
-  document.getElementById('joined-users').innerHTML = "<div>" + x + " player(s)" + "</div>";
+  document.getElementById('joined-users').innerHTML = "<div>" + x  + "</div>";
 };
 
 socket.on("players-melted", (serverPlayersMelted) => {
