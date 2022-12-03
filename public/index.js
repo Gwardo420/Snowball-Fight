@@ -57,6 +57,13 @@ function updateUsers(x) {
   document.getElementById('joined-users').innerHTML = "<div>" + x + " player(s)" + "</div>";
 };
 
+socket.on("players-melted", (serverPlayersMelted) => {
+  console.log(serverPlayersMelted)
+  if(serverPlayersMelted.length > 0) {
+    document.getElementById('snowballsNumber').innerHTML = serverPlayersMelted.length + " player(s) melted!";
+  }
+});
+
 let touchY = '';
 let touchX = '';
 let touchThreshold = 30;

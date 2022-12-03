@@ -20,6 +20,8 @@ let usersJoined = [];
 let players = [];
 let snowballs = [];
 
+let playersMelted = [];
+
 const inputsMap = {};
 let ground2D, logos2D, trees2D;
 
@@ -95,6 +97,7 @@ function tick(delta) {
           player.x = 250;
           player.y = 250;
           snowball.timeLeft = 0;
+          playersMelted.push(player.id)
           break;
         }
       }
@@ -105,6 +108,7 @@ function tick(delta) {
     io.emit("players", players);
     io.emit("snowballs", snowballs);
     io.emit("user-joined", players.length);
+    io.emit("players-melted", playersMelted);
   }
 }
 
