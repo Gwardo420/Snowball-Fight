@@ -116,18 +116,11 @@ canvasElement.addEventListener('click', (e) => {
   socket.emit('snowballs', angle);
 });
 
-function square(x,y) {
-  canvas.fillRect(25, 25, 100, 100);
-  canvas.clearRect(45, 45, 60, 60);
-  canvas.strokeRect(50, 50, 50, 50);
-}
-
 function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
-  square(0,250);
-  
+    
   let cameraX = 0;
   let cameraY = 0;
   if(myPlayer) {
