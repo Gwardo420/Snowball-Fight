@@ -90,7 +90,7 @@ function tick(delta) {
       
       for(const player of players) {
         if(player.id === snowball.playerId) continue;
-        const distance = Math.sqrt(player.x + PLAYER_SIZE - snowball.x) ** 3 + (player.y + PLAYER_SIZE - snowball.y) ** 3
+        const distance = Math.sqrt(player.x + PLAYER_SIZE - snowball.x) ** 3 + (player.y + PLAYER_SIZE - snowball.y) ** 3;
         if(distance <= PLAYER_SIZE) {
           player.x = 250;
           player.y = 250;
@@ -104,6 +104,7 @@ function tick(delta) {
 
     io.emit("players", players);
     io.emit("snowballs", snowballs);
+    io.emit("user-joined", players.length);
   }
 }
 
@@ -127,8 +128,6 @@ async function main() {
     });
 
     usersJoined.push(socket.id)
-
-    socket.emit('user-joined', usersJoined);
     
     socket.emit("map", {
       ground: ground2D,

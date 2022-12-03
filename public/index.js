@@ -10,10 +10,12 @@ santaHat.src = '/santa-hat.png';
 const audio = new Audio('walking-snow.mp3');
 
 const canvasElement = document.getElementById('canvas');
-console.log(canvasElement)
 canvasElement.width = window.innerWidth;
 canvasElement.height = window.innerHeight;
 const canvas = canvasElement.getContext('2d');
+
+canvas.height = 1000;
+canvas.width = 1000;
 
 const socket = io();
 
@@ -24,7 +26,7 @@ let otherTreeMap = [[]];
 let joinedMap = [];
 let players = [];
 let snowballs = [];
-const SNOWBALL_RADIUS = 5;
+const SNOWBALL_RADIUS = 2.5;
 
 const TILE_SIZE = 16;
 
@@ -46,15 +48,19 @@ socket.on('snowballs', (serverSnowballs) => {
   snowballs = serverSnowballs;
 });
 
-socket.on('user-joined', (user) => {
-  joinedMap.push(user);
-  const playerLength = players.length;
+socket.on('user-joined', (serverPlayerLength) => {
+  const playerLength = serverPlayerLength;
   updateUsers(playerLength);
 });
+
+function updateUsers(x) {
+  document.getElementById('joined-users').innerHTML = "<div>" + x + " player(s)" + "</div>";
+};
 
 let touchY = '';
 let touchX = '';
 let touchThreshold = 30;
+
 const inputs = {
   up: false, 
   down: false, 
@@ -102,7 +108,6 @@ function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
-  // updateUsers(playerLength);
   
   let cameraX = 0;
   let cameraY = 0;
@@ -184,11 +189,9 @@ function loop() {
 
   for(const snowball of snowballs) {
     canvas.fillStyle = "#FFFFFF";
-    canvas.strokeStyle = `#212121`;
     canvas.beginPath();
-    canvas.arc(snowball.x - cameraX, snowball.y - cameraY + 50, SNOWBALL_RADIUS, 0, 5 * Math.PI);
+    canvas.arc(snowball.x - cameraX - 15, snowball.y - cameraY + 25, SNOWBALL_RADIUS, 0, 5 * Math.PI);
     canvas.fill();
-    canvas.stroke();
   }
 
   window.requestAnimationFrame(loop);
