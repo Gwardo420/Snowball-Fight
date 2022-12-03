@@ -36,7 +36,7 @@ socket.on('connect', function(socket) {
 });
 
 async function check_username() {
-  const nickname = await prompt('Enter a username!')
+  const nickname = await prompt('Enter a username!');
   socket.emit('send-nickname', nickname);
 }
 
@@ -116,10 +116,17 @@ canvasElement.addEventListener('click', (e) => {
   socket.emit('snowballs', angle);
 });
 
+function square(x,y) {
+  canvas.fillRect(25, 25, 100, 100);
+  canvas.clearRect(45, 45, 60, 60);
+  canvas.strokeRect(50, 50, 50, 50);
+}
+
 function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
+  square(0,250);
   
   let cameraX = 0;
   let cameraY = 0;
@@ -196,10 +203,10 @@ function loop() {
   for(const player of players) {
     canvas.drawImage(snowmanImage, player.x - cameraX - 25, player.y - cameraY, 65, 65);
     canvas.drawImage(santaHat, player.x - cameraX + 1, player.y - cameraY, 18, 18);
-    if(player.username !== null) {
-      canvas.fillText(player.username.slice(0, 10) ? `${player.username}` : `${player.username.slice(0, 10)}...`, player.x - cameraX - 25, player.y - cameraY - 10);
-    } else {
+    if(player.username.toString() == "❄️null") {
       canvas.fillText(player.id.slice(0, 10) + "...", player.x - cameraX - 25, player.y - cameraY - 10);
+    } else {
+      canvas.fillText(player.username.slice(0, 10) ? `${player.username}` : `${player.username.slice(0, 10)}...`, player.x - cameraX - 25, player.y - cameraY - 10);
     }
   }
 

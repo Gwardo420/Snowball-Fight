@@ -94,11 +94,17 @@ function tick(delta) {
         if(player.id === snowball.playerId) continue;
         const distance = Math.sqrt((player.x) + PLAYER_SIZE - snowball.x) ** 2 + ((player.y - 65) + PLAYER_SIZE - snowball.y) ** 2;
         if(distance <= PLAYER_SIZE) {
-          player.x = 250;
-          player.y = 250;
-          snowball.timeLeft = 0;
-          playersMelted.push(player.id)
-          break;
+          if(snowball.x < 300) {
+            break;
+          } else if(snowball.y < 300) {
+            break;
+          } else {
+            player.x = 250;
+            player.y = 250;
+            snowball.timeLeft = 0;
+            playersMelted.push(player.id)
+            break;
+          }
         }
       }
     }
