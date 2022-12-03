@@ -21,7 +21,6 @@ let groundMap = [[]];
 let treeMap = [[]];
 let otherTreeMap = [[]];
 
-var snowballsThrown = 0;
 let joinedMap = [];
 let players = [];
 let snowballs = [];
@@ -49,24 +48,9 @@ socket.on('snowballs', (serverSnowballs) => {
 
 socket.on('user-joined', (user) => {
   joinedMap.push(user);
-  updateUsers(joinedMap[0].length);
+  const playerLength = players.length;
+  updateUsers(playerLength);
 });
-
-function updateUsers(e) {
-  document.getElementById('joined-users').innerHTML = `${e} player(s)`;
-}
-
-var snowballsThrown = 0;
-
-function display_balls() {
-  document.getElementById('snowballsNumber').innerHTML = 'You threw ' + snowballsThrown + ' snowballs!';
-};
-
-
-function increment() {
-  snowballsThrown++;
-  display_balls();
-}
 
 let touchY = '';
 let touchX = '';
@@ -112,17 +96,14 @@ canvasElement.addEventListener('click', (e) => {
     e.clientX - canvasElement.width / 2,
   );
   socket.emit('snowballs', angle);
-  increment();
 });
 
 function loop() {
   canvas.clearRect(0, 0, canvasElement.width, canvasElement.height);
 
   const myPlayer = players.find((player) => player.id === socket.id);
-  const playerLength = players.length;
-  console.log(playerLength);
-  updateUsers(playerLength);
-
+  // updateUsers(playerLength);
+  
   let cameraX = 0;
   let cameraY = 0;
   if(myPlayer) {
