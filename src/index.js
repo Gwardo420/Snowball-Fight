@@ -13,7 +13,7 @@ const loadMap = require("./mapLoader");
 const SPEED = 2.5;
 const TICK_RATE = 64;
 const SNOWBALL_SPEED = 3;
-const PLAYER_SIZE = 32;
+const PLAYER_SIZE = 65;
 const TILE_SIZE = 16;
 
 let usersJoined = [];
@@ -92,7 +92,7 @@ function tick(delta) {
       
       for(const player of players) {
         if(player.id === snowball.playerId) continue;
-        const distance = Math.sqrt(player.x + PLAYER_SIZE - snowball.x) ** 3 + (player.y + PLAYER_SIZE - snowball.y) ** 3;
+        const distance = Math.sqrt((player.x) + PLAYER_SIZE - snowball.x) ** 2 + ((player.y - 65) + PLAYER_SIZE - snowball.y) ** 2;
         if(distance <= PLAYER_SIZE) {
           player.x = 250;
           player.y = 250;
