@@ -182,7 +182,7 @@ function loop() {
   }
   
   for(const player of players) {
-    canvas.drawImage(snowmanImage, player.x - cameraX - 25, player.y - cameraY);
+    canvas.drawImage(snowmanImage, player.x - cameraX - 25, player.y - cameraY, 65, 65);
     canvas.drawImage(santaHat, player.x - cameraX + 1, player.y - cameraY, 18, 18);
     canvas.fillText(player.id.slice(0, 6) + "...", player.x - cameraX - 10, player.y - cameraY - 10);
   }
