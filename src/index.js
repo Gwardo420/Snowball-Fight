@@ -125,10 +125,16 @@ async function main() {
       right: false
     };
 
-    players.push({
-      id: socket.id, 
-      x: 1000, 
-      y: 1000,
+    socket.on('send-nickname', function(nickname) {
+      socket.nickname = nickname;
+      // users.push(socket.nickname);
+      // console.log(nickname);
+      players.push({
+        id: socket.id, 
+        x: 1000, 
+        y: 1000,
+        username: "❄️" + nickname
+      });
     });
 
     usersJoined.push(socket.id)
